@@ -37,8 +37,18 @@ var getMaxElement = function(arr) {
   return maxElement;
 };
 
+var renderText = function(ctx, x, y, text, color) {
+  ctx.fillStyle = color;
+  ctx.fillText(text, x, y);
+};
+
+var renderColumn = function(ctx, x, y, width, height, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, width, height);
+};
+
 window.renderStatistics = function(ctx, players, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, CLOUD_X + 10, CLOUD_Y + 10, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
   
   ctx.fillStyle = '#000';
@@ -49,15 +59,15 @@ window.renderStatistics = function(ctx, players, times) {
   for (var i = 0; i < players.length; i++) {
 
     ctx.fillStyle = '#000';
-    ctx.fillText(players[i], TEXT_WIDTH + CLOUD_X + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP - TEXT_WIDTH + GAP*2 - BAR_HEIGHT);
-    ctx.fillText(Math.round(times[i]), TEXT_WIDTH + CLOUD_X + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - barHeight/2 -(barHeight * times[i]) / maxTime);
+
+    renderText(ctx, TEXT_WIDTH + CLOUD_X + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP - TEXT_WIDTH + GAP*2 - BAR_HEIGHT, players[i], '#000');
+    renderText(ctx, TEXT_WIDTH + CLOUD_X + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - barHeight/2 -(barHeight * times[i]) / maxTime, Math.round(times[i]), '#000');
 
     if (players[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      ctx.fillStyle = 'rgba(0, 0, 255, ' + Math.random() + ')';
-    }
+      renderColumn(ctx, CLOUD_X + TEXT_WIDTH + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP - TEXT_HEIGHT, BAR_WIDTH, -(barHeight * times[i]) / maxTime, 'rgba(255, 0, 0, 1)');
 
-    ctx.fillRect(CLOUD_X + TEXT_WIDTH + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP - TEXT_HEIGHT, BAR_WIDTH, -(barHeight * times[i]) / maxTime);
+    } else {
+      renderColumn(ctx, CLOUD_X + TEXT_WIDTH + (GAP + TEXT_WIDTH) * i, CLOUD_Y + CLOUD_HEIGHT - FONT_GAP - TEXT_HEIGHT, BAR_WIDTH, -(barHeight * times[i]) / maxTime, 'hsl(230, 70%,' + Math.floor(Math.random() * 100) + '%)');
+    }
   }
 };
