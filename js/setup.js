@@ -11,15 +11,29 @@ var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var MIN_NAME_LENGTH = 2;
 
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var similarElement = document.querySelector('.setup-similar');
+
+var userDialogSetup = document.querySelector('.setup');
+
+var userNameInput = setup.querySelector('.setup-user-name');
+
+var playersCoatColor = document.querySelector('.wizard-coat');
+var playersEyesColor = document.querySelector('.wizard-eyes');
+var playersFireballColor = document.querySelector('.setup-fireball-wrap');
+
+
 function getArrayRandomElement(arr) {
   var rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
 }
 
-var userDialogSetup = document.querySelector('.setup');
+
 userDialogSetup.classList.remove('hidden');
 
-var similarElement = document.querySelector('.setup-similar');
 
 similarElement.classList.remove('hidden');
 
@@ -28,9 +42,6 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content
     .querySelector('.setup-similar-item');
 
-var setup = document.querySelector('.setup');
-var setupOpen = document.querySelector('.setup-open');
-var setupClose = setup.querySelector('.setup-close');
 
 var onPopupEscPress = function (evt) {
   if (evt.key === ESC_KEY) {
@@ -85,8 +96,6 @@ setupClose.addEventListener('keydown', function (evt) {
 });
 
 
-var userNameInput = setup.querySelector('.setup-user-name');
-
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
@@ -98,6 +107,7 @@ userNameInput.addEventListener('invalid', function () {
     userNameInput.setCustomValidity('');
   }
 });
+
 
 userNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
@@ -113,23 +123,17 @@ userNameInput.addEventListener('input', function (evt) {
 });
 
 
-var playersCoatColor = document.querySelector('.wizard-coat');
-
 playersCoatColor.addEventListener('click', function () {
   playersCoatColor.style.fill = getArrayRandomElement(COAT_COLORS);
 }
 );
 
 
-var playersEyesColor = document.querySelector('.wizard-eyes');
-
 playersEyesColor.addEventListener('click', function () {
   playersEyesColor.style.fill = getArrayRandomElement(EYES_COLORS);
 }
 );
 
-
-var playersFireballColor = document.querySelector('.setup-fireball-wrap');
 
 playersFireballColor.addEventListener('click', function () {
   playersFireballColor.style.background = getArrayRandomElement(FIREBALL_COLORS);
